@@ -1,0 +1,72 @@
+package com.udemy.currencyconversion.security;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class BasicAuthSecurityConfiguration {
+
+	@Bean
+	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeHttpRequests(request -> 
+										request
+										.anyRequest().
+										authenticated());
+		http.sessionManagement(session -> 
+									session.
+									sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.httpBasic(withDefaults());
+
+		http.csrf(csrf -> csrf.disable());
+		return http.build();
+	}
+
+	@Bean
+	WebMvcConfigurer CorsConfigurer() {
+		return new WebMvcConfigurer() {
+			@SuppressWarnings("unused")
+			public void addCorsMapping(CorsRegistry registry) {
+				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
+			}
+		};
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	UserDetailsService userDetailsService() {
+		var user = User.withUsername("user").password("{noop}password").roles("USER").build();
+
+		var admin = User.withUsername("admin").password("{noop}password1").roles("ADMIN").build();
+
+		return new InMemoryUserDetailsManager(user, admin);
+	}
+
+	@Bean
+	DataSource datasource() {
+		var driverManagerDataSource = new DriverManagerDataSource();
+		driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/springpractise");
+		driverManagerDataSource.setUsername("root");
+		driverManagerDataSource.setPassword("Momdad$163");
+		return driverManagerDataSource;
+	}
+
+}

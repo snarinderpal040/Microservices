@@ -1,0 +1,5 @@
+package com.udemy.currencyexchange.beans;
+
+public class CurrencyExchange {
+
+}

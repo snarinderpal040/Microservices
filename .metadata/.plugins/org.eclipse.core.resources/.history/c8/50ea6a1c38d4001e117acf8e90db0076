@@ -1,0 +1,6 @@
+package com.narinder.learnspringsecurity.beans;
+
+
+public class UserDeatils {
+
+}

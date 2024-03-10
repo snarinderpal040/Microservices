@@ -1,0 +1,20 @@
+spring.application.name=currency-conversion
+server.port=8100
+
+spring.config.import=optional:configserver:http://localhost:8888
+
+currency-exchange.url=http://localhost:8000
+
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+
+
+#Resilience4j Properties
+resilience4j.retry.instances.hello.max-attempts=5
+resilience4j.retry.instances.hello.enable-exponential-backoff=true
+resilience4j.retry.instances.hello.wait-duration=2s
+
+#Spring security
+spring.security.user.name=user
+spring.security.user.password=password

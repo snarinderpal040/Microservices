@@ -1,0 +1,16 @@
+package com.udemy.currencyconversion;
+
+import java.math.BigDecimal;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+import com.udemy.currencyconversion.beans.CurrencyConversion;
+
+@FeignClient(name = "currency-exchange", url = "localhost:8000")
+public interface CurrencyExchangeProxy {
+	
+	public CurrencyConversion convert(String from, String to, BigDecimal quantity) {
+		
+	}
+
+}

@@ -1,0 +1,8 @@
+package com.udemy.currencyexchange.controllers;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class CurrencyExchangeController {
+
+}

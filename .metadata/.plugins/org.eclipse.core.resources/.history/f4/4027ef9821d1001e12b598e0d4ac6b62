@@ -1,0 +1,17 @@
+package com.udemy.currencyexchange.beans;
+
+import java.math.BigDecimal;
+
+public class CurrencyExchange {
+	
+	private long id;
+	
+	private String from;
+	
+	private String to;
+	
+	private BigDecimal conversionMultiple;
+	
+	
+
+}

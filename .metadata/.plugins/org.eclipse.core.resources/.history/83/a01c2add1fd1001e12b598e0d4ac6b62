@@ -1,0 +1,5 @@
+
+
+spring.application.name=currency-exchnage
+
+server.port=8000

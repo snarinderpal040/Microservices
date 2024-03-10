@@ -1,0 +1,5 @@
+package com.udemy.currencyconversion;
+
+public interface CurrencyExchangeProxy {
+
+}

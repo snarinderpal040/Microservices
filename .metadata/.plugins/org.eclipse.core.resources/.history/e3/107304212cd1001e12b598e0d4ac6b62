@@ -1,0 +1,31 @@
+package com.udemy.currencyexchange.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.udemy.currencyexchange.CurrencyExchangeRepository;
+import com.udemy.currencyexchange.beans.CurrencyExchange;
+import com.udemy.currencyexchange.service.CurrencyExchangeService;
+
+@RestController
+public class CurrencyExchangeController {
+	
+	@Autowired
+	private CurrencyExchangeService service;
+	
+	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+	public ResponseEntity<CurrencyExchange> retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
+		if(currencyExchange == null) {
+			throw new RuntimeException(String.format("unable to find the data from %s to %s", from, to));
+		}
+		
+		String port = environment.getProperty("local.server.port");
+		currencyExchange.setEnvironment(port);
+		return new ResponseEntity<>();
+	}
+
+}

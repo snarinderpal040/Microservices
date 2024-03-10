@@ -1,0 +1,8 @@
+package com.udemy.apigateway;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ApiGatewayConfiguration {
+
+}

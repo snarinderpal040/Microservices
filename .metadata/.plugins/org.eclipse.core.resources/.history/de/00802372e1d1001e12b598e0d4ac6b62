@@ -1,0 +1,39 @@
+package com.udemy.currencyconversion.service;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.udemy.currencyconversion.CurrencyExchangeProxy;
+import com.udemy.currencyconversion.beans.CurrencyConversion;
+import com.udemy.currencyconversion.configurations.Config;
+
+@Service
+public class CurrencyConvertorService {
+	
+	@Autowired
+	private CurrencyExchangeProxy proxy;
+
+	@Autowired
+	private Config config;
+
+	public CurrencyConversion convert(String from, String to, BigDecimal quantity) {
+		HashMap<String, String> uriVariables = new HashMap<>();
+		uriVariables.put("from", from);
+		uriVariables.put("to", to);
+
+		ResponseEntity<CurrencyConversion> responseEntity = new RestTemplate().getForEntity(
+				config.getUrl() + "/currency-exchange/from/{from}/to/{to}", CurrencyConversion.class, uriVariables);
+
+		CurrencyConversion currencyConversion = responseEntity.getBody();
+
+		return new CurrencyConversion(currencyConversion.getId(), from, to, quantity,
+				currencyConversion.getConversionMultiple(),
+				currencyConversion.getConversionMultiple().multiply(quantity), currencyConversion.getEnvironment());
+	}
+
+}

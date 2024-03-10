@@ -1,0 +1,6 @@
+spring.config.import=optional:configserver:http://localhost:8888
+
+server.servlet.context-path=currency-exchange
+
+server.port=8000
+
